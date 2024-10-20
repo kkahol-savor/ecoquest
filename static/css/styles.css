@@ -29,6 +29,15 @@ body {
     height: auto;
 }
 
+.analysis-link {
+    display: block;
+    font-size: 12px;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 5px;
+    text-align: right;
+}
+
 .chat-box {
     flex-grow: 1;
     overflow-y: auto;

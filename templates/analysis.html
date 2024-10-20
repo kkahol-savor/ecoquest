@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Usage Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #e6f7ff;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: #e6f7ff;
+        }
+        .header img {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .column {
+            flex: 33.33%;
+            padding: 10px;
+        }
+        .full-width {
+            width: 100%;
+            padding: 10px;
+        }
+        .summary {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .summary img {
+            width: 50px;
+            vertical-align: middle;
+        }
+        .summary .number {
+            font-size: 24px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/"><img src="/static/logo.png" alt="EcoQuest Logo"></a>
+        <h1>Energy Usage Analysis</h1>
+    </div>
+    <div class="container">
+        <div class="full-width">
+            <div id="bar-graph-1day" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+            <div id="carbon-footprint-1day" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+            <div id="energy-burn-1day" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+        </div>
+        <div class="full-width">
+            <div id="bar-graph-7days" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+            <div id="carbon-footprint-7days" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+            <div id="energy-burn-7days" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+        </div>
+        <div class="full-width">
+            <div id="bar-graph-1month" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+            <div id="carbon-footprint-1month" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+            <div id="energy-burn-1month" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+        </div>
+    </div>
+    <div class="full-width">
+        <div id="pie-chart-tokens" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+        <div id="pie-chart-carbon-footprint" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+        <div id="pie-chart-energy-burn" style="width:33%;height:400px;display:inline-block;background-color:transparent;"></div>
+    </div>
+    <div class="summary">
+        <p>Estimated Mobile Phones that can be charged with this energy savings for a month of usage:</p>
+        <img src="/static/mobile.png" alt="Mobile Phone Icon">
+        <span class="number" id="mobile-phones-charged"></span>
+    </div>
+    <div class="full-width">
+        <div id="bar-graph-cumulative" style="width:100%;height:400px;"></div>
+    </div>
+
+    <script>
+        fetch('/analysis-data')
+            .then(response => response.json())
+            .then(data => {
+                // Bar graph for the last 1 day
+                var trace1 = {
+                    x: ['Eco Mode', 'Power Mode'],
+                    y: [data['1day']['eco_mode'], data['1day']['power_mode']],
+                    type: 'bar',
+                    marker: {
+                        color: ['#38f254', '#e0022b']
+                    }
+                };
+                var layout1 = {
+                    title: 'Token Usage in Last 1 Day',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('bar-graph-1day', [trace1], layout1);
+
+                // Bar graph for the last 7 days
+                var trace2 = {
+                    x: ['Eco Mode', 'Power Mode'],
+                    y: [data['7days']['eco_mode'], data['7days']['power_mode']],
+                    type: 'bar',
+                    marker: {
+                        color: ['#38f254', '#e0022b']
+                    }
+                };
+                var layout2 = {
+                    title: 'Token Usage in Last 7 Days',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('bar-graph-7days', [trace2], layout2);
+
+                // Bar graph for the last 1 month
+                var trace3 = {
+                    x: ['Eco Mode', 'Power Mode'],
+                    y: [data['1month']['eco_mode'], data['1month']['power_mode']],
+                    type: 'bar',
+                    marker: {
+                        color: ['#38f254', '#e0022b']
+                    }
+                };
+                var layout3 = {
+                    title: 'Token Usage in Last 1 Month',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('bar-graph-1month', [trace3], layout3);
+
+                // Pie chart for percentage divide of tokens
+                var trace4 = {
+                    labels: ['Eco Mode', 'Power Mode'],
+                    values: [data['1month']['eco_mode'], data['1month']['power_mode']],
+                    type: 'pie',
+                    marker: {
+                        colors: ['#38f254', '#e0022b']
+                    }
+                };
+                var layout4 = {
+                    title: 'Percentage Divide Between Eco Mode and Power Mode',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('pie-chart-tokens', [trace4], layout4);
+
+                // Carbon footprint and energy burn graphs
+                function createStackedBarGraph(id, title, eco_data, power_data) {
+                    var trace_eco = {
+                        x: ['Eco Mode'],
+                        y: [eco_data],
+                        name: 'Eco Mode',
+                        type: 'bar',
+                        marker: { color: '#38f254' }
+                    };
+                    var trace_power = {
+                        x: ['Power Mode'],
+                        y: [power_data],
+                        name: 'Power Mode',
+                        type: 'bar',
+                        marker: { color: '#e0022b' }
+                    };
+                    var layout = {
+                        title: title,
+                        barmode: 'stack',
+                        font: {
+                            size: 8
+                        },
+                        paper_bgcolor: 'transparent',
+                        plot_bgcolor: 'transparent'
+                    };
+                    Plotly.newPlot(id, [trace_eco, trace_power], layout);
+                }
+
+                createStackedBarGraph('carbon-footprint-1day', 'Carbon Footprint in Last 1 Day (grams of CO₂)', data['carbon_footprint']['1day']['eco_mode'], data['carbon_footprint']['1day']['power_mode']);
+                createStackedBarGraph('carbon-footprint-7days', 'Carbon Footprint in Last 7 Days (grams of CO₂)', data['carbon_footprint']['7days']['eco_mode'], data['carbon_footprint']['7days']['power_mode']);
+                createStackedBarGraph('carbon-footprint-1month', 'Carbon Footprint in Last 1 Month (grams of CO₂)', data['carbon_footprint']['1month']['eco_mode'], data['carbon_footprint']['1month']['power_mode']);
+                createStackedBarGraph('energy-burn-1day', 'Energy Burn in Last 1 Day (kWh)', data['energy_burn']['1day']['eco_mode'], data['energy_burn']['1day']['power_mode']);
+                createStackedBarGraph('energy-burn-7days', 'Energy Burn in Last 7 Days (kWh)', data['energy_burn']['7days']['eco_mode'], data['energy_burn']['7days']['power_mode']);
+                createStackedBarGraph('energy-burn-1month', 'Energy Burn in Last 1 Month (kWh)', data['energy_burn']['1month']['eco_mode'], data['energy_burn']['1month']['power_mode']);
+
+                // Pie chart for percentage divide of carbon footprint
+                var trace5 = {
+                    labels: ['Eco Mode', 'Power Mode'],
+                    values: [data['carbon_footprint']['1month']['eco_mode'], data['carbon_footprint']['1month']['power_mode']],
+                    type: 'pie',
+                    marker: {
+                        colors: ['#38f254', '#e0022b']
+                    }
+                };
+                var layout5 = {
+                    title: 'Percentage Divide of Carbon Footprint',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('pie-chart-carbon-footprint', [trace5], layout5);
+
+                // Pie chart for percentage divide of energy burn
+                var trace6 = {
+                    labels: ['Eco Mode', 'Power Mode'],
+                    values: [data['energy_burn']['1month']['eco_mode'], data['energy_burn']['1month']['power_mode']],
+                    type: 'pie',
+                    marker: {
+                        colors: ['#38f254', '#e0022b']
+                    }
+                };
+                var layout6 = {
+                    title: 'Percentage Divide of Energy Burn',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('pie-chart-energy-burn', [trace6], layout6);
+
+                // Display the number of mobile phones that can be charged
+                document.getElementById('mobile-phones-charged').textContent = Math.round(data['mobile_phones_charged']);
+
+                // Bar graph for cumulative mobile phones charged over the last 7 days
+                var dates = data['cumulative_mobile_phones_charged'].map(item => item.date);
+                var mobile_phones = data['cumulative_mobile_phones_charged'].map(item => item.mobile_phones_charged);
+                var trace7 = {
+                    x: dates,
+                    y: mobile_phones,
+                    type: 'bar',
+                    name: 'Mobile phone charging metric',
+                    marker: { color: '#38f254' }
+                };
+
+                // Calculate average line
+                var average = mobile_phones.reduce((a, b) => a + b, 0) / mobile_phones.length;
+                var trendline = Array(dates.length).fill(average);
+
+                var trace8 = {
+                    x: dates,
+                    y: trendline,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: 'Average',
+                    line: { color: '#ff5733' }
+                };
+
+                var layout7 = {
+                    title: 'Cumulative Mobile Phones Charged Over Last 7 Days',
+                    font: {
+                        size: 8
+                    },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                };
+                Plotly.newPlot('bar-graph-cumulative', [trace7, trace8], layout7);
+            });
+    </script>
+</body>
+</html>
