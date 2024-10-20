@@ -9,7 +9,7 @@
 <body>
     <div class="chat-container">
         <img src="/static/logo.png" alt="EcoQuest Logo" class="logo">
-        <a href="/analysis"class="analysis-link">Energy Analysis</a>
+        <a href="/analysis" class="analysis-link">Energy Analysis</a>
         <div class="chat-box" id="chat-box">
             <!-- Chat messages will appear here -->
         </div>
@@ -28,6 +28,26 @@
             </form>
         </div>
     </div>
+    <script>
+        // Function to switch background color of chat-box based on mode
+        function switchBackgroundColor(mode) {
+            const chatBox = document.getElementById('chat-box');
+            if (mode === 'power_use') {
+                chatBox.classList.add('power-mode');
+            } else {
+                chatBox.classList.remove('power-mode');
+            }
+        }
+
+        // Add event listeners to radio buttons
+        document.getElementById('power_use').addEventListener('change', function() {
+            switchBackgroundColor('power_use');
+        });
+
+        document.getElementById('eco_mode').addEventListener('change', function() {
+            switchBackgroundColor('eco_mode');
+        });
+    </script>
     <script src="/static/js/script.js"></script>
 </body>
 </html>

@@ -123,3 +123,11 @@ body {
 button[type="submit"]:hover .send-icon {
     filter: brightness(1.1);
 }
+
+.chat-box {
+    background-color: #e6f7ff; /* Default background color */
+}
+
+.chat-box.power-mode {
+    background-color: #ffcccc; /* Light red background color */
+}
