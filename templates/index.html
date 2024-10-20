@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to EcoQuest: DEPS Sustainable Large Language Model</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    <h1>Welcome to EcoQuest: DEPS Sustainable Large Language Model</h1>
+    <form id="query-form">
+        <label for="query">Enter your query:</label>
+        <textarea id="query" name="query"></textarea>
+        <br>
+        <label for="power_use">Power Use</label>
+        <input type="radio" id="power_use" name="mode" value="power_use">
+        <br>
+        <label for="eco_mode">Eco Mode</label>
+        <input type="radio" id="eco_mode" name="mode" value="eco_mode" checked>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="response"></div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+/* Basic styles for the form and response */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #2d6a4f;
+}
+
+label {
+    margin-top: 10px;
+    display: block;
+}
+
+#response {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    white-space: pre-wrap;  /* This ensures line breaks are respected */
+}
