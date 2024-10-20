@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Welcome to EcoQuest: DEPS Sustainable Large Language Model</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoQuest Chat Interface</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Welcome to EcoQuest: DEPS Sustainable Large Language Model</h1>
-    <form id="query-form">
-        <label for="query">Enter your query:</label>
-        <textarea id="query" name="query"></textarea>
-        <br>
-        <label for="power_use">Power Use</label>
-        <input type="radio" id="power_use" name="mode" value="power_use">
-        <br>
-        <label for="eco_mode">Eco Mode</label>
-        <input type="radio" id="eco_mode" name="mode" value="eco_mode" checked>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="response"></div>
+    <div class="chat-container">
+        <img src="/static/logo.png" alt="EcoQuest Logo" class="logo">
+        <a href="/analysis"class="analysis-link">Energy Analysis</a>
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="input-area">
+            <form id="query-form">
+                <input type="text" id="query" name="query" placeholder="Ask EcoQuest..." autocomplete="off">
+                <button type="submit" id="send-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/512/786/786205.png" alt="Send" class="send-icon">
+                </button>
+                <div class="modes">
+                    <label for="power_use">Power Use</label>
+                    <input type="radio" id="power_use" name="mode" value="power_use">
+                    <label for="eco_mode">Eco Mode</label>
+                    <input type="radio" id="eco_mode" name="mode" value="eco_mode" checked>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="/static/js/script.js"></script>
 </body>
 </html>
